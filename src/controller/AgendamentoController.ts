@@ -23,9 +23,9 @@ class AgendamentoController extends Agendamento {
 
     static async agendamento(req: Request, res: Response) {
         try {
-            const idAgendamento = parseInt(req.params.idAgendamento as string);
+            const idAgendamento = Number(req.params.id);
 
-            if (isNaN(idAgendamento) || idAgendamento <= 0) {
+            if (!Number.isInteger(idAgendamento) || idAgendamento <= 0) {
                 res.status(400).json({
                     mensagem: "ID inválido. Informe um número inteiro positivo."
                 });
@@ -35,7 +35,7 @@ class AgendamentoController extends Agendamento {
             const agendamento = await Agendamento.listarAgendamento(idAgendamento);
             res.status(200).json(agendamento);
         } catch (error: any) {
-            console.error(`[AgendamentoController] Erro ao buscar agendamento (id: ${req.params.idAgendamento}):`, error);
+            console.error(`[AgendamentoController] Erro ao buscar agendamento (id: ${req.params.id}):`, error);
 
             if (error.message?.includes("não encontrado")) {
                 res.status(404).json({ mensagem: error.message });
@@ -95,9 +95,9 @@ class AgendamentoController extends Agendamento {
 
     static async atualizar(req: Request, res: Response) {
         try {
-            const idAgendamento = parseInt(req.params.idAgendamento as string);
+            const idAgendamento = Number(req.params.id);
 
-            if (isNaN(idAgendamento) || idAgendamento <= 0) {
+            if (!Number.isInteger(idAgendamento) || idAgendamento <= 0) {
                 res.status(400).json({
                     mensagem: "ID inválido. Informe um número inteiro positivo."
                 });
@@ -139,7 +139,7 @@ class AgendamentoController extends Agendamento {
                 mensagem: "Agendamento não encontrado."
             });
         } catch (error: any) {
-            console.error(`[AgendamentoController] Erro ao atualizar agendamento (id: ${req.params.idAgendamento}):`, error);
+            console.error(`[AgendamentoController] Erro ao atualizar agendamento (id: ${req.params.id}):`, error);
 
             if (error.message?.includes("não encontrado")) {
                 res.status(404).json({ mensagem: error.message });
@@ -154,9 +154,9 @@ class AgendamentoController extends Agendamento {
 
     static async remover(req: Request, res: Response) {
         try {
-            const idAgendamento = parseInt(req.params.idAgendamento as string);
+            const idAgendamento = Number(req.params.id);
 
-            if (isNaN(idAgendamento) || idAgendamento <= 0) {
+            if (!Number.isInteger(idAgendamento) || idAgendamento <= 0) {
                 res.status(400).json({
                     mensagem: "ID inválido. Informe um número inteiro positivo."
                 });
@@ -176,7 +176,7 @@ class AgendamentoController extends Agendamento {
                 mensagem: "Agendamento não encontrado."
             });
         } catch (error: any) {
-            console.error(`[AgendamentoController] Erro ao remover agendamento (id: ${req.params.idAgendamento}):`, error);
+            console.error(`[AgendamentoController] Erro ao remover agendamento (id: ${req.params.id}):`, error);
 
             if (error.message?.includes("não encontrado")) {
                 res.status(404).json({ mensagem: error.message });

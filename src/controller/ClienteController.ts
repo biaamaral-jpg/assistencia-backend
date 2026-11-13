@@ -25,9 +25,9 @@ class ClienteController extends Cliente {
 
     static async cliente(req: Request, res: Response) {
         try {
-            const idCliente = parseInt(req.params.idCliente as string);
+            const idCliente = Number(req.params.id);
 
-            if (isNaN(idCliente) || idCliente <= 0) {
+            if (!Number.isInteger(idCliente) || idCliente <= 0) {
                 res.status(400).json({
                     mensagem: "ID inválido. Informe um número inteiro positivo."
                 });
@@ -40,7 +40,7 @@ class ClienteController extends Cliente {
 
         } catch (error: any) {
             console.error(
-                `[ClienteController] Erro ao buscar cliente (id: ${req.params.idCliente}):`,
+                `[ClienteController] Erro ao buscar cliente (id: ${req.params.id}):`,
                 error
             );
 
@@ -107,13 +107,13 @@ class ClienteController extends Cliente {
 
     static async remover(req: Request, res: Response) {
         try {
-            const idCliente = parseInt(req.params.idCliente as string);
+            const idCliente = Number(req.params.id);
 
-            if (isNaN(idCliente) || idCliente <= 0) {
+            if (!Number.isInteger(idCliente) || idCliente <= 0) {
                 res.status(400).json({
                     mensagem: "ID inválido. Informe um número inteiro positivo."
                 });
-                
+                return;
             }
 
             const result = await Cliente.removerCliente(idCliente);
@@ -130,7 +130,7 @@ class ClienteController extends Cliente {
 
         } catch (error: any) {
             console.error(
-                `[ClienteController] Erro ao remover cliente (id: ${req.params.idCliente}):`,
+                `[ClienteController] Erro ao remover cliente (id: ${req.params.id}):`,
                 error
             );
 
@@ -149,9 +149,9 @@ class ClienteController extends Cliente {
 
     static async atualizar(req: Request, res: Response) {
         try {
-            const idCliente = parseInt(req.params.idCliente as string);
+            const idCliente = Number(req.params.id);
 
-            if (isNaN(idCliente) || idCliente <= 0) {
+            if (!Number.isInteger(idCliente) || idCliente <= 0) {
                 res.status(400).json({
                     mensagem: "ID inválido. Informe um número inteiro positivo."
                 });
@@ -198,7 +198,7 @@ class ClienteController extends Cliente {
 
         } catch (error: any) {
             console.error(
-                `[ClienteController] Erro ao atualizar cliente (id: ${req.params.idCliente}):`,
+                `[ClienteController] Erro ao atualizar cliente (id: ${req.params.id}):`,
                 error
             );
 

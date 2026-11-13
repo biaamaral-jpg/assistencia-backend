@@ -23,9 +23,9 @@ class EquipamentoController extends Equipamento {
 
     static async equipamento(req: Request, res: Response) {
         try {
-            const idEquipamento = parseInt(req.params.idEquipamento as string);
+            const idEquipamento = Number(req.params.id);
 
-            if (isNaN(idEquipamento) || idEquipamento <= 0) {
+            if (!Number.isInteger(idEquipamento) || idEquipamento <= 0) {
                 res.status(400).json({
                     mensagem: "ID inválido. Informe um número inteiro positivo."
                 });
@@ -35,7 +35,7 @@ class EquipamentoController extends Equipamento {
             const equipamento = await Equipamento.listarEquipamento(idEquipamento);
             res.status(200).json(equipamento);
         } catch (error: any) {
-            console.error(`[EquipamentoController] Erro ao buscar equipamento (id: ${req.params.idEquipamento}):`, error);
+            console.error(`[EquipamentoController] Erro ao buscar equipamento (id: ${req.params.id}):`, error);
 
             if (error.message?.includes("não encontrado")) {
                 res.status(404).json({ mensagem: error.message });
@@ -94,9 +94,9 @@ class EquipamentoController extends Equipamento {
 
     static async atualizar(req: Request, res: Response) {
         try {
-            const idEquipamento = parseInt(req.params.idEquipamento as string);
+            const idEquipamento = Number(req.params.id);
 
-            if (isNaN(idEquipamento) || idEquipamento <= 0) {
+            if (!Number.isInteger(idEquipamento) || idEquipamento <= 0) {
                 res.status(400).json({
                     mensagem: "ID inválido. Informe um número inteiro positivo."
                 });
@@ -154,9 +154,9 @@ class EquipamentoController extends Equipamento {
 
     static async remover(req: Request, res: Response) {
         try {
-            const idEquipamento = parseInt(req.params.idEquipamento as string);
+            const idEquipamento = Number(req.params.id);
 
-            if (isNaN(idEquipamento) || idEquipamento <= 0) {
+            if (!Number.isInteger(idEquipamento) || idEquipamento <= 0) {
                 res.status(400).json({
                     mensagem: "ID inválido. Informe um número inteiro positivo."
                 });
@@ -176,7 +176,7 @@ class EquipamentoController extends Equipamento {
                 mensagem: "Equipamento não encontrado."
             });
         } catch (error: any) {
-            console.error(`[EquipamentoController] Erro ao remover equipamento (id: ${req.params.idEquipamento}):`, error);
+            console.error(`[EquipamentoController] Erro ao remover equipamento (id: ${req.params.id}):`, error);
 
             if (error.message?.includes("não encontrado")) {
                 res.status(404).json({ mensagem: error.message });

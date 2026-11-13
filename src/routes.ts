@@ -3,6 +3,7 @@ import { Router } from "express";
 import ClienteController from "./controller/ClienteController.js";
 import EquipamentoController from "./controller/EquipamentoController.js";
 import AgendamentoController from "./controller/AgendamentoController.js";
+import AuthController from "./controller/AuthController.js";
 
 const router = Router();
 
@@ -26,5 +27,8 @@ router.get("/agendamento/:id", AgendamentoController.agendamento);
 router.post("/agendamento", AgendamentoController.cadastrar);
 router.put("/agendamento/:id", AgendamentoController.atualizar);
 router.delete("/agendamento/:id", AgendamentoController.remover);
+
+
+router.post("/login", AuthController.login);
 
 export { router };
