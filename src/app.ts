@@ -1,0 +1,46 @@
+
+import "dotenv/config";
+import { DatabaseModel } from "./model/DatabaseModel.js";
+import { server } from "./server.js";
+
+function getPort(): number {
+    const candidates = [
+        process.env.PORT,
+        process.env.SERVER_PORT,
+        "3000",
+    ];
+
+    for (const raw of candidates) {
+        if (!raw) continue;
+
+        const n = Number(raw);
+
+        if (Number.isFinite(n) && n >= 0 && n < 65536) {
+            return n;
+        }
+    }
+
+    return 3000;
+}
+
+const port = getPort();
+
+async function iniciarServidor() {
+    try {
+        const bancoConectado = await new DatabaseModel().testeConexao();
+
+        if (!bancoConectado) {
+            console.log("Não foi possível conectar ao banco de dados");
+            return;
+        }
+
+        server.listen(port, "0.0.0.0", () => {
+            console.log(`Servidor rodando na porta ${port}`);
+        });
+
+    } catch (error) {
+        console.error("Erro ao iniciar o servidor:", error);
+    }
+}
+
+iniciarServidor();
